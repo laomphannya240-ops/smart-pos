@@ -1,0 +1,155 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-khmer: 'Noto Sans Khmer', 'Battambang', 'Inter', sans-serif;
+  --shadow-soft: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -8px rgb(15 23 42 / 0.08);
+  --color-surface: #ffffff;
+  --color-canvas: #f6f7fb;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  html[lang='km'] {
+    font-family: var(--font-khmer);
+    line-height: 1.85;
+    letter-spacing: 0;
+  }
+
+  html[lang='km'] .km-compact {
+    line-height: 1.5;
+  }
+
+  body {
+    @apply bg-[#f6f7fb] font-sans text-slate-900 antialiased;
+    min-height: 100vh;
+  }
+
+  .dark body {
+    @apply bg-[#0b1020] text-slate-100;
+  }
+
+  ::selection {
+    @apply bg-indigo-500/20 text-indigo-900;
+  }
+
+  .dark ::selection {
+    @apply bg-indigo-400/30 text-white;
+  }
+
+  /* Chrome / Edge / Safari scrollbars */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(148 163 184 / 0.45);
+    border-radius: 9999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(100 116 139 / 0.6);
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
+
+@layer components {
+  .app-card {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-[0_1px_2px_rgb(15_23_42_/_0.04),0_8px_24px_-16px_rgb(15_23_42_/_0.18)] dark:border-slate-800 dark:bg-slate-900;
+  }
+
+  .subtle-grid {
+    background-image:
+      linear-gradient(to right, rgb(100 116 139 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(100 116 139 / 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Printable receipt & report                                          */
+/* ------------------------------------------------------------------ */
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .print-area,
+  .print-area * {
+    visibility: visible !important;
+  }
+
+  .print-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .print-area .print-hide,
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-area .app-card {
+    border-color: #e2e8f0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    break-inside: avoid;
+  }
+
+  .print-break {
+    break-inside: avoid;
+  }
+}
